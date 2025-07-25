@@ -56,7 +56,8 @@ def start_radio():
 
 @app.task
 def start_controllers():
-    send_command(client_socket, 'start_rotator_radio') 
+    send_command(client_socket, 'start_radio') 
+    send_command(client_socket, 'start_rotator')
     print("RADIO AND ROTATOR CONTROLLERS ENGAGED")
 
 @app.task

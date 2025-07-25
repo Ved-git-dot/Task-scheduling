@@ -1,0 +1,3 @@
+*.Identifiers
+__pycache__/
+*.rdb
