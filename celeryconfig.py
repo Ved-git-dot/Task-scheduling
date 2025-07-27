@@ -1,12 +1,12 @@
 from celery.schedules import crontab
-from scheduler import  schedule_the_pass
+from scheduler import  schedule_the_pass, modified_schedule
 from datetime import timedelta
 broker_url='redis://localhost:6379/0'
 result_backend='redis://localhost:6379/0'
 
 timezone='Asia/Kolkata'
 enable_utc=False
-pass_start_time, pass_end_time= schedule_the_pass()
+pass_start_time, pass_end_time= modified_schedule()
 t_initialize_pass = pass_start_time - timedelta(minutes=10)
 t_generate_text_files = pass_start_time - timedelta(minutes=9)
 t_switch_on_hydra = pass_start_time - timedelta(minutes=8)
@@ -16,10 +16,6 @@ t_start_controllers = pass_start_time - timedelta(minutes=1)
 t_kill_pid = pass_end_time + timedelta(minutes=1)
 t_switch_off_gpio = pass_end_time + timedelta(minutes=2)
 beat_schedule={
-    'download-tle-every-week': {
-        'task': 'tasks.tle',
-        'schedule': crontab(minute=35, hour=22, day_of_week=4),
-    },
     'switch-on-gpio-pins': {
         'task': 'tasks.initiate_pass',
         'schedule':crontab(minute=t_initialize_pass.minute, hour=t_initialize_pass.hour),

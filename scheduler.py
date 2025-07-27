@@ -56,5 +56,11 @@ def schedule_the_pass():
             continue
 
 
+# his function is for testing if the celery beat schedule is working properly
+def modified_schedule():
+    ts = load.timescale()
+    now_time = ts.now().astimezone(IST)
+    return now_time+timedelta(minutes=10, seconds=30), now_time+timedelta(minutes=20)
+
 
 print(schedule_the_pass())
